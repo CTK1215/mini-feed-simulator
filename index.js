@@ -1,26 +1,27 @@
 // Mini Feed Simulator
-// The data layer behind a simple social feed. No DOM, no frameworks,
-// just core JavaScript run with Node.
+// The data side of a social feed. No browser, no DOM, just plain
+// JavaScript in Node so the focus stays on arrays and objects.
 
 const feed = [];
 let nextId = 1;
 
-// Creates a post object, gives it a unique id, zero likes, and a
-// timestamp, then adds it to the feed.
+// Build the post, stamp it with an id and a timestamp, start it at
+// zero likes, then push it onto the feed.
 function createPost(username, content) {
   const post = {
     id: nextId,
     username: username,
     content: content,
     likes: 0,
-    timestamp: Date.now() + nextId, // nudge keeps timestamps unique when posts are created in the same millisecond
+    timestamp: Date.now() + nextId, // back-to-back posts can land on the same millisecond, adding the id keeps every timestamp unique
   };
   nextId++;
   feed.push(post);
   return post;
 }
 
-// Finds the post with the matching id and adds one like.
+// Track down the post by id and bump its likes. If the id doesn't
+// exist, say so and hand back null instead of crashing.
 function likePost(postId) {
   const post = feed.find((p) => p.id === postId);
   if (!post) {
@@ -31,28 +32,29 @@ function likePost(postId) {
   return post;
 }
 
-// Returns every post in the feed.
+// Hand back the whole feed as is.
 function getFeed() {
   return feed;
 }
 
-// Returns posts sorted newest first. Spread copies the array so the
-// original feed order is left alone.
+// Newest first. The spread makes a copy so I'm sorting the copy,
+// not scrambling the real feed.
 function sortByNewest() {
   return [...feed].sort((a, b) => b.timestamp - a.timestamp);
 }
 
-// Returns posts sorted most likes first.
+// Most likes first. Same deal, sort the copy, leave the feed alone.
 function sortByLikes() {
   return [...feed].sort((a, b) => b.likes - a.likes);
 }
 
-// Returns only the posts created by the given user.
+// Just one user's posts. Filter keeps the ones that match and
+// drops the rest.
 function getPostsByUser(username) {
   return feed.filter((post) => post.username === username);
 }
 
-// Turns a list of posts into readable lines for the console.
+// Turn post objects into readable one-liners for the console.
 function formatPosts(posts) {
   return posts.map(
     (post) => `#${post.id} @${post.username}: "${post.content}" (${post.likes} likes)`
@@ -61,6 +63,8 @@ function formatPosts(posts) {
 
 // --- Demo run ---
 
+// Seed a few posts, spread some likes around, then print the feed
+// every way it can be sliced. Last call proves the bad-id guard works.
 createPost("alex", "Hello world");
 createPost("paul", "Learning JavaScript is fun");
 createPost("chris", "Shipping the mini feed simulator");
