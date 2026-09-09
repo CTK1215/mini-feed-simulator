@@ -65,10 +65,10 @@ function formatPosts(posts) {
 
 // Seed a few posts, spread some likes around, then print the feed
 // every way it can be sliced. Last call proves the bad-id guard works.
-createPost("alex", "Hello world");
+createPost("bishara", "Hello world");
 createPost("paul", "Learning JavaScript is fun");
 createPost("chris", "Shipping the mini feed simulator");
-createPost("alex", "Arrays and objects are starting to click");
+createPost("david", "Arrays and objects are starting to click");
 
 likePost(1);
 likePost(1);
