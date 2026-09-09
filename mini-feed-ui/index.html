@@ -9,26 +9,75 @@
 </head>
 
 <body>
-	<h1>Mini Feed</h1>
+	<main class="app">
+		<header class="app-header">
+			<h1>Mini Feed</h1>
+			<button type="button" id="themeToggle" class="theme-btn" aria-label="Toggle dark mode">
+				<svg class="icon icon-sun" viewBox="0 0 24 24" aria-hidden="true">
+					<circle cx="12" cy="12" r="4" />
+					<path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" />
+				</svg>
+				<svg class="icon icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+					<path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" />
+				</svg>
+			</button>
+		</header>
 
-	<form id="postForm">
-		<input id="usernameInput" type="text" placeholder="Username">
-		<textarea id="contentInput" rows="2" placeholder="What's on your mind?"></textarea>
-		<input id="imageInput" type="url" placeholder="Image URL (optional)">
-		<button type="submit" id="postBtn">Post</button>
-	</form>
+		<form id="postForm">
+			<input id="usernameInput" type="text" placeholder="Username">
+			<textarea id="contentInput" rows="5" placeholder="What's on your mind?"></textarea>
 
-	<div class="feed-controls">
-		<select id="sortSelect">
-			<option value="newest">Newest first</option>
-			<option value="likes">Most liked</option>
-		</select>
-		<input id="filterInput" type="text" placeholder="Filter by username">
-	</div>
+			<!-- File inputs are hard to style, so each one is hidden and its
+			     label does the clicking. Clicking a label opens the dialog for
+			     the input it points at (the for / id pair). -->
+			<div class="attach-row">
+				<label for="imageFile" class="attach-btn">
+					<svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+						<rect x="3" y="5" width="18" height="14" rx="2" />
+						<circle cx="9" cy="10" r="2" />
+						<path d="M21 16l-5-5-6 6-2-2-5 5" />
+					</svg>
+					Photo
+				</label>
+				<input id="imageFile" type="file" accept="image/*" hidden>
 
-	<p id="emptyMessage" hidden>No posts yet.</p>
+				<label for="videoFile" class="attach-btn">
+					<svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+						<rect x="3" y="6" width="13" height="12" rx="2" />
+						<path d="M16 10l5-3v10l-5-3z" />
+					</svg>
+					Video
+				</label>
+				<input id="videoFile" type="file" accept="video/*" hidden>
 
-	<section id="feedContainer"></section>
+				<label for="anyFile" class="attach-btn">
+					<svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+						<path d="M21 11.5l-8.5 8.5a5 5 0 0 1-7-7l9-9a3.5 3.5 0 0 1 5 5l-9 9a2 2 0 0 1-3-3l8-8" />
+					</svg>
+					File
+				</label>
+				<input id="anyFile" type="file" hidden>
+			</div>
+
+			<p id="attachName" class="attach-name" hidden></p>
+
+			<button type="submit" id="postBtn">Post</button>
+		</form>
+
+		<p id="saveStatus" class="save-status" hidden></p>
+
+		<div class="feed-controls">
+			<select id="sortSelect">
+				<option value="newest">Newest first</option>
+				<option value="likes">Most liked</option>
+			</select>
+			<input id="filterInput" type="text" placeholder="Filter by username">
+		</div>
+
+		<p id="emptyMessage" hidden>No posts yet.</p>
+
+		<section id="feedContainer"></section>
+	</main>
 
 	<script src="script.js"></script>
 </body>

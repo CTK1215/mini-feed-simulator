@@ -1,25 +1,97 @@
+/* ----- theme -----
+   Every color lives in a variable on :root. Dark mode is the same
+   variables with different values, switched on by data-theme="dark"
+   on the <html> element. Nothing below this block names a raw color. */
+
+:root {
+    color-scheme: light;
+    --bg: #f0f2f5;
+    --card: #ffffff;
+    --text: #1c1e21;
+    --muted: #777777;
+    --border: #cccccc;
+    --chip: #f7f8fa;
+    --chip-hover: #e4e6eb;
+    --accent: #1877f2;
+    --accent-hover: #1466cc;
+    --danger: #d64541;
+}
+
+[data-theme="dark"] {
+    color-scheme: dark;
+    --bg: #18191a;
+    --card: #242526;
+    --text: #e4e6eb;
+    --muted: #a0a3a8;
+    --border: #3e4042;
+    --chip: #3a3b3c;
+    --chip-hover: #4e4f50;
+    --accent: #2d88ff;
+    --accent-hover: #4a9bff;
+    --danger: #f0524e;
+}
+
 * {
     box-sizing: border-box;
 }
 
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
 body {
     font-family: Arial, Helvetica, sans-serif;
-    background-color: #f0f2f5;
-    color: #1c1e21;
-    max-width: 520px;
-    margin: 40px auto;
-    padding: 0 16px;
+    background-color: var(--bg);
+    color: var(--text);
+}
+
+
+.app {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 24px 16px;
+}
+
+.app-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    position: relative;
 }
 
 h1 {
     text-align: center;
 }
 
+.theme-btn {
+    position: absolute;
+    right: 0;
+    display: inline-flex;
+    padding: 6px;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    background-color: var(--card);
+    color: var(--text);
+    cursor: pointer;
+}
+
+.theme-btn:hover {
+    background-color: var(--chip-hover);
+}
+
+/* Show the moon in light mode (click for dark) and the sun in dark
+   mode (click for light). */
+.icon-moon { display: none; }
+[data-theme="dark"] .icon-moon { display: block; }
+[data-theme="dark"] .icon-sun { display: none; }
+
 #postForm {
     display: flex;
     flex-direction: column;
     gap: 8px;
-    background-color: #fff;
+    background-color: var(--card);
     padding: 12px;
     border-radius: 8px;
     margin-bottom: 16px;
@@ -27,29 +99,81 @@ h1 {
 
 #usernameInput,
 #contentInput,
-#filterInput {
+#filterInput,
+.comment-form input {
     padding: 8px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--border);
     border-radius: 4px;
     font-family: inherit;
+    background-color: var(--card);
+    color: var(--text);
 }
 
 #contentInput {
     resize: vertical;
 }
 
+/* ----- attach buttons ----- */
+
+.attach-row {
+    display: flex;
+    gap: 8px;
+}
+
+
+.attach-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background-color: var(--chip);
+    color: var(--text);
+    font-size: 14px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.attach-btn:hover {
+    background-color: var(--chip-hover);
+}
+
+.icon {
+    width: 18px;
+    height: 18px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.attach-name {
+    margin: 0;
+    font-size: 13px;
+    color: var(--muted);
+}
+
 #postBtn {
     padding: 8px 12px;
     border: none;
     border-radius: 4px;
-    background-color: #1877f2;
+    background-color: var(--accent);
     color: #fff;
     font-weight: bold;
     cursor: pointer;
 }
 
 #postBtn:hover {
-    background-color: #1466cc;
+    background-color: var(--accent-hover);
+}
+
+.save-status {
+    margin: 0 0 12px;
+    font-size: 13px;
+    color: var(--danger);
+    text-align: center;
 }
 
 .feed-controls {
@@ -60,9 +184,10 @@ h1 {
 
 #sortSelect {
     padding: 8px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--border);
     border-radius: 4px;
-    background-color: #fff;
+    background-color: var(--card);
+    color: var(--text);
     cursor: pointer;
 }
 
@@ -71,13 +196,15 @@ h1 {
 }
 
 #emptyMessage {
-    color: #777;
+    color: var(--muted);
     font-style: italic;
     text-align: center;
 }
 
+/* ----- post cards ----- */
+
 .post {
-    background-color: #fff;
+    background-color: var(--card);
     border-radius: 8px;
     padding: 12px;
     margin-bottom: 12px;
@@ -85,49 +212,155 @@ h1 {
 
 .post-user {
     font-weight: bold;
-    margin: 0 0 4px;
+    margin: 0;
+}
+
+.post-time {
+    display: block;
+    font-size: 12px;
+    color: var(--muted);
+    margin: 0 0 6px;
 }
 
 .post-content {
     margin: 0 0 10px;
 }
 
-.post-image {
+.post-image,
+.post-video {
     display: block;
     max-width: 100%;
     border-radius: 4px;
     margin-bottom: 10px;
 }
 
+
+.post-file {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    margin-bottom: 10px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background-color: var(--chip);
+    color: var(--text);
+    font-size: 14px;
+    text-decoration: none;
+}
+
+a.post-file:hover {
+    background-color: var(--chip-hover);
+}
+
+.post-file.lost {
+    color: var(--muted);
+    font-style: italic;
+}
+
 .post-actions {
     display: flex;
+    flex-wrap: wrap;
     gap: 8px;
 }
 
 .like-btn,
-.delete-btn {
+.delete-btn,
+.share-btn,
+.download-btn {
     padding: 4px 10px;
     border-radius: 4px;
     cursor: pointer;
-    background-color: #fff;
+    background-color: var(--card);
+    font-size: 13px;
+    font-family: inherit;
+    text-decoration: none;
+    line-height: 1.4;
 }
 
 .like-btn {
-    border: 1px solid #1877f2;
-    color: #1877f2;
+    border: 1px solid var(--accent);
+    color: var(--accent);
 }
 
 .like-btn:hover {
-    background-color: #1877f2;
+    background-color: var(--accent);
     color: #fff;
 }
 
 .delete-btn {
-    border: 1px solid #d64541;
-    color: #d64541;
+    border: 1px solid var(--danger);
+    color: var(--danger);
 }
 
 .delete-btn:hover {
-    background-color: #d64541;
+    background-color: var(--danger);
     color: #fff;
+}
+
+.share-btn,
+.download-btn {
+    border: 1px solid var(--border);
+    color: var(--text);
+}
+
+.share-btn:hover,
+.download-btn:hover {
+    background-color: var(--chip-hover);
+}
+
+/* ----- comments ----- */
+
+.comments {
+    list-style: none;
+    margin: 10px 0 0;
+    padding: 8px 0 0;
+    border-top: 1px solid var(--border);
+}
+
+.comment {
+    font-size: 14px;
+    margin-bottom: 6px;
+}
+
+.comment-user {
+    font-weight: bold;
+}
+
+.comment-time {
+    font-size: 11px;
+    color: var(--muted);
+    margin-left: 6px;
+}
+
+.comment-form {
+    display: flex;
+    gap: 6px;
+    margin-top: 8px;
+}
+
+.comment-form input {
+    font-size: 13px;
+    padding: 6px;
+}
+
+.comment-form input[name="username"] {
+    width: 110px;
+}
+
+.comment-form input[name="text"] {
+    flex: 1;
+}
+
+.comment-form button {
+    padding: 4px 10px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background-color: var(--chip);
+    color: var(--text);
+    cursor: pointer;
+}
+
+.comment-form button:hover {
+    background-color: var(--chip-hover);
 }
