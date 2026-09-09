@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="style.css">
+	<title>Mini Feed</title>
+</head>
+
+<body>
+	<h1>Mini Feed</h1>
+
+	<form id="postForm">
+		<input id="usernameInput" type="text" placeholder="Username">
+		<textarea id="contentInput" rows="2" placeholder="What's on your mind?"></textarea>
+		<input id="imageInput" type="url" placeholder="Image URL (optional)">
+		<button type="submit" id="postBtn">Post</button>
+	</form>
+
+	<div class="feed-controls">
+		<select id="sortSelect">
+			<option value="newest">Newest first</option>
+			<option value="likes">Most liked</option>
+		</select>
+		<input id="filterInput" type="text" placeholder="Filter by username">
+	</div>
+
+	<p id="emptyMessage" hidden>No posts yet.</p>
+
+	<section id="feedContainer"></section>
+
+	<script src="script.js"></script>
+</body>
+
+</html>
